@@ -5,6 +5,7 @@ import { AppService } from "./app.service";
 import { INestApplication } from "@nestjs/common";
 
 describe("AppService Integration Test", () => {
+  process.env.NODE_ENV = "test";
   let service: AppService;
   let app: INestApplication;
 
