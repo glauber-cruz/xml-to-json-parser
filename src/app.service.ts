@@ -96,10 +96,13 @@ export class AppService {
         }
 
         status.completed += 1;
-        console.log(`
-          Chunk: ${currentChunk}/${Math.floor(makesElements.length / chunkSize)} 
-          Tasks completed: ${status.completed}/${makesElements.length}`
-        );
+        
+        if(process.env.NODE_ENV !== "test") {
+          console.log(`
+            Chunk: ${currentChunk}/${Math.floor(makesElements.length / chunkSize)} 
+            Tasks completed: ${status.completed}/${makesElements.length}`
+          );
+        }
       });
 
       await Promise.all(chunkPromises);
@@ -107,12 +110,14 @@ export class AppService {
 
       const progress = ((status.completed / makesElements.length) * 100).toFixed(2);
       
-      console.log(`
-        ==========================================
-          Chunk #${currentChunk} 
-          Completed - Progress ${progress}%! 
-        ==========================================
+      if(process.env.NODE_ENV !== "test") {
+        console.log(`
+          ==========================================
+            Chunk #${currentChunk} 
+            Completed - Progress ${progress}%! 
+          ==========================================
         `);
+      }
     }
 
     return makes;
