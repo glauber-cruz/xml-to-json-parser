@@ -1,0 +1,23 @@
+name: XML TO JSON
+
+on: ["push"]
+jobs:
+  run-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Docker
+        run: |
+          echo "NODE_ENV=test" >> $GITHUB_ENV
+          docker compose -f ./docker-compose.yml up -d 
+
+      - name: Run lint
+        run: docker compose -f ./docker-compose.yml exec nest-app npm run lint
+
+      - name: Run tests
+        run: docker compose -f ./docker-compose.yml exec nest-app npm run test 
+
+      - name: Tear down Docker
+        if: always()
+        run: docker compose -f ./docker-compose.yml down
