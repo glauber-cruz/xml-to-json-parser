@@ -57,8 +57,7 @@ export class AppService {
 
   private async saveMakersAndVehiclesInDatabase(makesElements:MakesJson[], savedMakesIds:number[], allMakesInDatabase:Makes[]) {
     const makes:MakesData[] = [];
-    console.log(process.env.NODE_ENV)
-    const chunkSize = process.env.NODE_env === "test" ? 1 : 200;
+    const chunkSize = process.env.NODE_ENV === "test" ? 1 : 200;
 
     let makesToSaveInDatabase:MakesData[] = [];
 
